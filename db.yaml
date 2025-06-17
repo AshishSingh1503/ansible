@@ -7,8 +7,13 @@
     dbname: electric
     dbuser: current
     dbpass: tesla
-
   tasks:
+    - debug:
+        msg: "The dbname is {{dbname}}"
+
+    - debug:
+        var: dbuser
+
     - name: Install mariadb-server
       ansible.builtin.apt:
         name: mariadb-server
@@ -39,3 +44,8 @@
         priv: '*.*:ALL'
         state: present
         login_unix_socket: /var/run/mysqld/mysqld.sock
+      register: dbout
+
+    - name: print dbout variable
+      debug:
+        var: dbout
